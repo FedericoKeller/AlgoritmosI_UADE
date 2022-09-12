@@ -1,7 +1,3 @@
-
-
-
-
 def getTrib(n):
     trib = []
     if (n < 1):
@@ -40,17 +36,56 @@ def getOddNumbers(n):
 
     return odd 
 
-def createDictionary(trib, odd):
-    for i in range(len(trib)):
+def createRotation(currentOdd, trib):
+    resp = []
 
-        print(trib[i], odd[i])
+    for num in trib:
+        if(currentOdd >= num):
+            resp.append(num)
+
+    
+    return resp
+
+
+def isDivisible(current_rotation):
+    resp = []
+    for rotation in current_rotation:  
+        resp.append(rotation[0] % rotation[1] != 0)
+    
+    return all(resp)
+
+
+def createDictionary(trib, odd):
+    trib_dict = {}
+
+    resp = []
+    current_rotation = []
+
+    for o in odd:
+        for n in createRotation(o, trib):
+            current_rotation.append([o, n])
+            resp.append(o % n != 0)
+        
+
+        if(isDivisible(current_rotation)):
+            trib_dict[current_rotation[-1][1]] = o
+        
+        current_rotation = []
+    
+
+    print(trib_dict)
         
 
 
-# Driver code
-n = 100
+   
+    
+ 
+        
+n = 14
 trib = getTrib(n)
-odd = getOddNumbers(100)
+filteredTrib = list(filter(lambda trib_elem: trib_elem != 1, trib))
+
+odd = getOddNumbers(14)
 
 
-createDictionary(trib, odd)
+createDictionary(filteredTrib, odd)

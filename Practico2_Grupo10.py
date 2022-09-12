@@ -37,55 +37,63 @@ def getOddNumbers(n):
     return odd 
 
 def createRotation(currentOdd, trib):
-    resp = []
+    rotation = []
 
     for num in trib:
         if(currentOdd >= num):
-            resp.append(num)
+            rotation.append(num)
 
     
-    return resp
+    return rotation
 
 
-def isDivisible(current_rotation):
-    resp = []
+def isNotDivisible(current_rotation):
+    hasDivisors = []
     for rotation in current_rotation:  
-        resp.append(rotation[0] % rotation[1] != 0)
+        hasDivisors.append(rotation[0] % rotation[1] != 0)
     
-    return all(resp)
+    return all(hasDivisors)
+
+
+
+def getCurrentRotation(number, trib):
+    current_rotation = []
+
+    for n_trib in createRotation(number, trib):
+        current_rotation.append([number, n_trib])
+    
+
+    return current_rotation
+    
+
+     
 
 
 def createDictionary(trib, odd):
     trib_dict = {}
+    filteredTrib = list(filter(lambda trib_elem: trib_elem != 1, trib))
 
-    resp = []
-    current_rotation = []
+    for number in odd:
+        current_rotation = getCurrentRotation(number, filteredTrib)
 
-    for o in odd:
-        for n in createRotation(o, trib):
-            current_rotation.append([o, n])
-            resp.append(o % n != 0)
+        if(isNotDivisible(current_rotation)):
+            trib_dict[current_rotation[-1][1]] = number
         
-
-        if(isDivisible(current_rotation)):
-            trib_dict[current_rotation[-1][1]] = o
-        
-        current_rotation = []
     
 
-    print(trib_dict)
+    return trib_dict
         
 
 
    
     
- 
-        
-n = 14
-trib = getTrib(n)
-filteredTrib = list(filter(lambda trib_elem: trib_elem != 1, trib))
+def main():
+    n = 14
+    trib = getTrib(n)
+    odd = getOddNumbers(n)
 
-odd = getOddNumbers(14)
+    trib_dict = createDictionary(trib, odd)
+    print(trib_dict)
 
 
-createDictionary(filteredTrib, odd)
+main()

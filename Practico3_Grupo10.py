@@ -2,7 +2,7 @@ def is_input_valid(n):
     try:
         is_valid = int(n)
     except ValueError:
-        print('El valor ingresado no corresponde a un número.')
+        print('El valor ingresado no corresponde a un número natural.')
         is_valid = False
     except Exception as e:
         raise SystemExit('Hubo un error en la entrada del número.', e)
@@ -30,6 +30,8 @@ def get_substr(numeric_str):
                 num_substr.append(int(numeric_str[i:j]))
             except ValueError: 
                 pass
+            except Exception as e:
+                raise SystemExit('Hubo un problema generando las subcadenas del número ingresado.', e)
 
 
     

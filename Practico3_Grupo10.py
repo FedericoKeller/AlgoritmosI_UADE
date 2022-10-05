@@ -1,20 +1,28 @@
-def is_input_valid(n):
-    try:
-        is_valid = int(n)
-    except ValueError:
-        print('El valor ingresado no corresponde a un número natural.')
-        is_valid = False
-    except Exception as e:
-        raise SystemExit('Hubo un error en la entrada del número.', e)
+class InputContainsLetters(ValueError):
+    pass
 
+class InputAllLetters(ValueError):
+    pass
+
+def is_input_valid(n: str):
+    is_valid = True
+    try:
+        if(n.isalpha()): raise InputAllLetters("Solo se ingresaron letras.")
+        if(not n.isdigit() and "." not in n): raise InputContainsLetters("Se ingresaron letras además de números.")
+
+    except (InputAllLetters, InputContainsLetters) as err:
+        is_valid = False
+        print(err)
     
     return is_valid
+
+
 
 
 def get_numeric_str():
     num = input("Cargue un número\n")
 
-    while(is_input_valid(num) is False):
+    while(not is_input_valid(num)):
         num = input("Cargue un número\n")
 
     return num
@@ -30,8 +38,6 @@ def get_substr(numeric_str):
                 num_substr.append(int(numeric_str[i:j]))
             except ValueError: 
                 pass
-            except Exception as e:
-                raise SystemExit('Hubo un problema generando las subcadenas del número ingresado.', e)
 
 
     
@@ -39,10 +45,8 @@ def get_substr(numeric_str):
 
 
 def check_substr(num_substr):
-    try:
-        divisors = list(filter(lambda divisor: (divisor % 3 == 0 and divisor != 0),  num_substr))
-    except Exception as e:
-        raise SystemExit('Hubo un problema generando los divisores del número ingresado.', e)
+    divisors = list(filter(lambda divisor: (divisor % 3 == 0 and divisor != 0),  num_substr))
+
     
     return divisors
 

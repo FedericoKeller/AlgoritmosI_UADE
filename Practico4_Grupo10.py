@@ -13,18 +13,15 @@ def get_binary_data(n, rest = []):
     return get_binary_data(next_number, rest)
 
 
-def add_to_logs(username, param, isError):
+def add_to_logs(username, param = None, isError = False):
     with open("logs.txt", "a", encoding = 'utf-8') as f:
         result = f"Error: ({username}): {param}" if isError else f"({username})"
         
         f.write(f"{date.today()}: {result}\n")
         
 
-
-
-
-def print_result(binary_data):
-    print(binary_data)
+def print_result(natural_number, binary_data):
+    print(f"El número {natural_number} es igual a {binary_data} en binario.")
 
 
 def get_username():
@@ -43,12 +40,11 @@ def main():
         natural_number = int(input("Ingrese un número natural: \n"))
 
         binary_data = get_binary_data(natural_number)
-        print_result(binary_data)
-        add_to_logs(username, None, False)
+        print_result(natural_number, binary_data)
+        add_to_logs(username)
         
     except ValueError:
-        e = "El número ingresado no es natural."
-        add_to_logs(username, e, True)
+        add_to_logs(username, "El número ingresado no es natural.", True)
         raise SystemExit(e)
     except Exception as e:
         add_to_logs("Vacío", e, True)

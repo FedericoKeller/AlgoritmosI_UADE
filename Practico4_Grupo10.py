@@ -3,14 +3,11 @@ from datetime import date
 class InputIsEmpty(Exception):
     pass
 
-def get_binary_data(n, rest = []):
+def get_binary_data(n):
+    remainder = n % 2
+    if (n == 0): return str(n).lstrip("0")
 
-    if (n == 0): return ''.join(map(str, rest[::-1]))
-
-    next_number, remainder = divmod(n, 2)
-    rest.append(remainder)
-
-    return get_binary_data(next_number, rest)
+    return str(get_binary_data(n // 2)) + str(remainder)
 
 
 def add_to_logs(username, param = None, isError = False):

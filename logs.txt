@@ -1,0 +1,2 @@
+2022-10-21: Error: (Vacío): El nombre de usuario no puede estar vacío.
+2022-10-21: (federico)
